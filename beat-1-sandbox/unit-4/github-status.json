@@ -1,0 +1,53 @@
+{
+  "url": "https://github.com/codepath/pathreview-ai301-fa26-howard/pull/91",
+  "head": "stepheng223:fix/64-partial-overlap-fixture",
+  "sha": "bddfee49e798607880d35a5eb4d28da94a2f8125",
+  "base": "codepath:main",
+  "checks": [
+    {
+      "name": "frontend",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/codepath/pathreview-ai301-fa26-howard/actions/runs/39710395339/job/119600085675"
+    },
+    {
+      "name": "typecheck",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/codepath/pathreview-ai301-fa26-howard/actions/runs/39710395339/job/119600085583"
+    },
+    {
+      "name": "test-unit",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/codepath/pathreview-ai301-fa26-howard/actions/runs/39710395339/job/119600085490"
+    },
+    {
+      "name": "test-integration",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/codepath/pathreview-ai301-fa26-howard/actions/runs/39710395339/job/119600085489"
+    },
+    {
+      "name": "lint",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/codepath/pathreview-ai301-fa26-howard/actions/runs/39710395339/job/119600085281"
+    }
+  ],
+  "runs": [
+    {
+      "id": 39710395339,
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/codepath/pathreview-ai301-fa26-howard/actions/runs/39710395339"
+    }
+  ],
+  "files": [
+    {
+      "path": "tests/unit/test_relevance_scorer.py",
+      "additions": 1,
+      "deletions": 5
+    }
+  ]
+}

@@ -1,37 +1,35 @@
-Live mode: target matches scope.md; read carried-over voice guide, plan.md, complete fix.diff, draft PR text, original repro evidence, fresh check outputs, repository template and docs/CONTRIBUTING.md, CI workflow, and live issue #64.
-
-First failing required check: repository-checks. Required green GitHub CI is not yet verifiable. Open from the student fork and verify the five jobs, then rerun this precheck. No voice-rule violations found in the draft. All checks are shown below; the draft is held.
+Final live mode precheck after publication and CI. Read scope first: target is codepath/pathreview-ai301-fa26-howard. Applied voice guide, rubric, evidence guide and procedure to plan.md, full upstream-base diff, title/body, original repro, fresh check evidence, repository template, contribution rules and CI results. All required checks pass; no voice-rule violations found. Integration is an empty suite explicitly accepted by the repo CI shim; no coverage is claimed. Initial reject is preserved in live-precheck-before-publication.txt.
 
 ```json
 {
-  "item": "https://github.com/codepath/pathreview-ai301-fa26-howard/issues/64 (local draft; PR not opened)",
+  "item": "https://github.com/codepath/pathreview-ai301-fa26-howard/pull/91",
   "checks": [
     {
       "name": "plan-fidelity",
       "grade": "pass",
-      "evidence": "fix.diff changes only the planned chunk and removes its strict xfail; plan.md records no deviations."
+      "evidence": "GitHub PR #91 changes only the planned fixture and strict xfail; published description and plan.md agree, with no deviations."
     },
     {
       "name": "behavioral-evidence",
       "grade": "pass",
-      "evidence": "Original before capture fails with assert 1.0 < 0.9; fresh after runs show 19 passed and targeted 1 passed."
+      "evidence": "Before repro shows assert 1.0 < 0.9; after shows 19 scorer tests passing, targeted test passing and old/new scores of 1.0/0.75."
     },
     {
       "name": "repository-checks",
-      "grade": "fail",
-      "evidence": "Local lint, black, mypy, unit and frontend checks pass; required five-job GitHub CI is not yet available."
+      "grade": "pass",
+      "evidence": "GitHub run 39710395339 passed lint, typecheck, test-unit, test-integration and frontend; integration success uses the documented no-tests shim."
     },
     {
       "name": "reviewable-diff",
       "grade": "pass",
-      "evidence": "Only one fixture line and its four-line strict xfail decorator change; no unrelated hunks."
+      "evidence": "GitHub confirms tests/unit/test_relevance_scorer.py is the only changed file: one insertion, five deletions, no unrelated hunks."
     },
     {
       "name": "repository-standards",
-      "grade": "fail",
-      "evidence": "Draft fills every template section and discloses Codex assistance, but fork-origin PR and required green CI remain outstanding."
+      "grade": "pass",
+      "evidence": "PR targets codepath:main from stepheng223:fix/64-partial-overlap-fixture; title/body name issue #64, template is filled, and Codex tool and extent are disclosed."
     }
   ],
-  "verdict": "reject"
+  "verdict": "accept"
 }
 ```

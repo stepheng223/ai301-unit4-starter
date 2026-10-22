@@ -4,7 +4,9 @@
 
 **Pull request**
 
-Not opened yet. The expected fork URL was not accessible, and this environment has no GitHub CLI configured. A completed description is in pr-description.md; GitHub publication, its link, and CI verification remain outstanding. Do not submit this record as a completed PR.
+https://github.com/codepath/pathreview-ai301-fa26-howard/pull/91
+
+Opened from `stepheng223/pathreview-ai301-fa26-howard:fix/64-partial-overlap-fixture` against `codepath/pathreview-ai301-fa26-howard:main`. Fix commit: `bddfee49e798607880d35a5eb4d28da94a2f8125`. Published diff verified: one file, one insertion, five deletions, exactly matching plan.md. The GitHub description names issue #64, fills the template, and includes before/after repro output, check evidence, limitations and Codex disclosure.
 
 Issue: https://github.com/codepath/pathreview-ai301-fa26-howard/issues/64
 Posted plan: https://github.com/codepath/pathreview-ai301-fa26-howard/issues/64#issuecomment-6138056972
@@ -42,4 +44,13 @@ This tool prefers a hold when claim fidelity is uncertain. It over-rejected pkg-
 
 The carried-over plan is plan.md, including its Deviations section. build-evidence-before.txt and build-evidence-after.txt are original Unit 3 captures, not new runs. fix.diff contains exactly the planned fixture replacement and removal of its strict xfail. repository-checks.txt contains fresh local check attempts and outcomes. pr-description.md is the reviewable publication draft. The local live precheck and current limitations are recorded in live-precheck.txt.
 
-Fresh validation: lint, black and mypy passed; CI-equivalent unit suite passed 376 tests with 52 other seeded xfails; frontend passed 18 tests. Integration collected no tests, the condition explicitly permitted by the CI shim. The live precheck verdict is reject until fork-origin publication and required GitHub CI are established.
+Fresh validation: lint, black and mypy passed; CI-equivalent unit suite passed 376 tests with 52 other seeded xfails; frontend passed 18 tests. Integration collected no tests, the condition explicitly permitted by the CI shim. The pre-publication live precheck returned reject while publication and CI were unavailable; it is preserved in live-precheck-before-publication.txt. The PR is now published and all five GitHub CI jobs passed. The final live precheck is accept; see live-precheck.txt and github-status.json.
+
+## Final live precheck
+
+**Verdict: accept.** All five required rubric checks pass. The issue #64 fixture and strict xfail edits match the plan exactly; original repro and fresh after outputs demonstrate the change; local checks and all five GitHub CI jobs pass; the diff contains no unrelated work; the published description fills every template section and discloses Codex assistance. No voice-rule violations were found. The integration job passes through the repository's documented empty-suite shim, so this does not claim integration test coverage.
+
+PR: https://github.com/codepath/pathreview-ai301-fa26-howard/pull/91
+CI evidence: https://github.com/codepath/pathreview-ai301-fa26-howard/actions/runs/39710395339
+
+Precheck history: the pre-publication run was reject for unavailable publication/CI evidence; after pushing the fork branch, opening PR #91 and verifying all five jobs, the final run is accept. The tool files did not change, so the saved 18/20 eval and its fingerprints remain current.

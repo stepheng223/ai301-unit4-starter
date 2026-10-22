@@ -13,9 +13,9 @@ Reproduction: https://github.com/codepath/pathreview-ai301-fa26-howard/issues/64
 - Keep the query, assertion band and scorer unchanged. No plan deviations.
 
 ## Testing
-- [ ] **CI is green on this PR (all five jobs)** — pending publication; no GitHub CI results exist yet.
+- [x] **CI is green on this PR (all five jobs)** — lint, typecheck, test-unit, test-integration and frontend all passed: https://github.com/codepath/pathreview-ai301-fa26-howard/actions/runs/39710395339
 - [x] Unit tests pass: CI-equivalent `LLM_PROVIDER=mock .venv/bin/python -m pytest tests/unit -v --tb=short`: **376 passed, 52 xfailed**, exit 0. The 52 remaining xfails belong to other seeded issues.
-- [ ] Integration tests pass: `make test-integration` exits 2 because pytest collects no tests (pytest exit 5). The current CI workflow explicitly treats this empty-suite result as success; no integration coverage is claimed.
+- [x] Integration CI passes (empty-suite shim): `make test-integration` exits 2 because pytest collects no tests (pytest exit 5). The current CI workflow explicitly treats this empty-suite result as success; no integration coverage is claimed.
 - [x] Linter passes: `make lint`, exit 0.
 - [x] Type checker passes: `make typecheck`, 76 source files, exit 0.
 - [x] New/updated tests cover the changes: all 19 relevance-scorer tests pass; targeted partial-overlap test passes.
@@ -46,6 +46,6 @@ Direct calls to the real scorer in the Unit 3 capture returned 1.0 for the origi
 Not applicable: this change only corrects a Python test fixture. The command outputs above demonstrate the behavior.
 
 ## Notes for Reviewers
-Only `tests/unit/test_relevance_scorer.py` changes, with one insertion and five deletions. The initial broad local run was blocked by missing dependencies, and the next by a tokenizer-data download restriction. After installing the declared dependencies and allowing that download, the CI-equivalent unit run passed. Local Python 3.12 validation does not establish the outcome of GitHub's Python 3.11 jobs. CI confirmation remains required before review.
+Only `tests/unit/test_relevance_scorer.py` changes, with one insertion and five deletions. The initial broad local run was blocked by missing dependencies, and the next by a tokenizer-data download restriction. After installing the declared dependencies and allowing that download, the CI-equivalent unit run passed. Local Python 3.12 validation does not establish the outcome of GitHub's Python 3.11 jobs. All five GitHub CI jobs passed for commit bddfee4; the integration job uses the documented empty-suite shim.
 
-AI assistance: OpenAI Codex helped draft the plan and PR text, make the bounded fixture edit, and execute and interpret validation. The recorded commands and outputs are actual runs; this draft still requires the submitting author's review.
+AI assistance: OpenAI Codex helped draft the plan and PR text, make the bounded fixture edit, and execute and interpret validation. The recorded commands and outputs are actual runs.
