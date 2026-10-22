@@ -1,0 +1,15 @@
+# Rubric: is this pull request ready to submit?
+
+## Checks
+
+| Check | Evidence | Pass condition | Weight |
+|---|---|---|---|
+| plan-fidelity | Plan-context scope, implementation steps and deviations compared with every diff hunk and candidate description. | Every behavioral change and omitted planned outcome is accounted for by the plan or explicit deviation notes, and the description accurately states what the diff delivers. An honestly disclosed limitation or deferred edge is allowed; silent expansion, omission, or contradictory fidelity claims fail. | required |
+| behavioral-evidence | Plan test plan and reproduction steps compared with candidate test-evidence commands, inputs, observed results and description. | Evidence exercises the issue's concrete behavior with an observable before and after, or explicitly documents an honest cannot-reproduce outcome and its bounded implications. Claimed fixes have supporting observations; generic assurances and unrelated green tests do not prove the behavior. Disclosed untested edges do not invalidate the behavior actually demonstrated. | required |
+| repository-checks | Repo-facts required checks and plan validation compared with captured check commands, outcomes and stated limitations. | Applicable repository checks were run and their outcomes are visible. A check blocked or failing for an explicitly identified unrelated environment or pre-existing reason may pass when the limitation is disclosed and relevant validation is shown; unexplained failures, omitted checks without explanation, and bare “tests pass” claims fail. | required |
+| reviewable-diff | Unified diff and commit list compared with the bounded change and recorded deviations. | The intended change is inspectable without unrelated formatting churn, generated debris, debug leftovers, dead blocks or unrelated edits obscuring it. Necessary nearby edits and justified supporting changes are allowed; judge actual hunks rather than file count or commit count. | required |
+| repository-standards | Repo-facts PR-template asks, contribution/AI policy and maintainer thread directions compared with title and description. | Each stated template ask has substantive content, applicable maintainer directions are addressed, and required AI disclosure states the tool and extent of assistance when policy asks for them. Placeholders and omitted required sections fail. Use stated obligations and evidence of assistance, including thread lineage; invent no blanket disclosure requirement for repositories without one. | required |
+
+## Verdict rule
+
+Return accept only when every required check passes. Return reject if any required check fails or is unclear. Use unclear when evidence cannot establish the condition, and fail for an observable violation or explicitly missing required proof. Preferred checks, if added, never change the verdict. Honest limitations pass only within the conditions above; disclosure alone cannot excuse unrelated drift, absent behavioral proof, or ignored standards.

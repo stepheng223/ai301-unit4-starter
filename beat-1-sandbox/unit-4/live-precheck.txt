@@ -1,0 +1,37 @@
+Live mode: target matches scope.md; read carried-over voice guide, plan.md, complete fix.diff, draft PR text, original repro evidence, fresh check outputs, repository template and docs/CONTRIBUTING.md, CI workflow, and live issue #64.
+
+First failing required check: repository-checks. Required green GitHub CI is not yet verifiable. Open from the student fork and verify the five jobs, then rerun this precheck. No voice-rule violations found in the draft. All checks are shown below; the draft is held.
+
+```json
+{
+  "item": "https://github.com/codepath/pathreview-ai301-fa26-howard/issues/64 (local draft; PR not opened)",
+  "checks": [
+    {
+      "name": "plan-fidelity",
+      "grade": "pass",
+      "evidence": "fix.diff changes only the planned chunk and removes its strict xfail; plan.md records no deviations."
+    },
+    {
+      "name": "behavioral-evidence",
+      "grade": "pass",
+      "evidence": "Original before capture fails with assert 1.0 < 0.9; fresh after runs show 19 passed and targeted 1 passed."
+    },
+    {
+      "name": "repository-checks",
+      "grade": "fail",
+      "evidence": "Local lint, black, mypy, unit and frontend checks pass; required five-job GitHub CI is not yet available."
+    },
+    {
+      "name": "reviewable-diff",
+      "grade": "pass",
+      "evidence": "Only one fixture line and its four-line strict xfail decorator change; no unrelated hunks."
+    },
+    {
+      "name": "repository-standards",
+      "grade": "fail",
+      "evidence": "Draft fills every template section and discloses Codex assistance, but fork-origin PR and required green CI remain outstanding."
+    }
+  ],
+  "verdict": "reject"
+}
+```

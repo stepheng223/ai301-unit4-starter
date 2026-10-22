@@ -1,0 +1,782 @@
+{
+  "tool_dir": "../tools/pr-precheck",
+  "model": "sonnet",
+  "agreement": [
+    18,
+    20
+  ],
+  "results": [
+    {
+      "id": "pkg-01",
+      "verdict": "reject",
+      "failed_checks": [
+        "plan-fidelity",
+        "repository-checks",
+        "repository-standards"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "fail",
+          "evidence": "Plan says check in the bulk-copy paths; diff adds one check at tokenize_bytes entry (duplicating the existing make_stream_space call) with no recorded deviation, while the description claims 'a capacity check to the bulk-copy path'."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Issue repro shows 99999 on main vs 100000 on branch, ASAN heap-buffer-overflow on main and clean on branch, plus a regression test with the issue's shape."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "fail",
+          "evidence": "Only 'pytest pandas/tests/io/parser' (2841 passed) is shown; the template's required pre-commit/code checks have no outcome or stated blocker."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Two small focused commits touching only tokenizer.c and one test; no formatting churn, debug leftovers or generated files."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "fail",
+          "evidence": "Template asks 'closes #xxxx', pre-commit, type annotations and a whatsnew entry; the description has no issue reference or whatsnew entry and the diff adds none."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "standards-wall",
+      "calibration": false
+    },
+    {
+      "id": "pkg-02",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "pass",
+          "evidence": "Diff changes save_text/save_html/save_svg to export clear=False and clear after write, matching the plan's single-file scope; description says the same, no extra changes"
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Repro before prints '' after the failed save, after prints 'IMPORTANT OUTPUT\\n'; new test also asserts a successful save still clears"
+        },
+        {
+          "name": "repository-checks",
+          "grade": "pass",
+          "evidence": "'pytest tests/ -q passes (1462 passed, 12 skipped)' shown; no other required checks stated in repo facts"
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Single commit 3f8a1c2; hunks limited to console.py, one test and CHANGELOG with no churn or debug debris"
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "Type of changes: Bug fix stated; CHANGELOG.md '### Fixed' entry added; CONTRIBUTING.md states no AI policy"
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "category": "clear-accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-03",
+      "verdict": "reject",
+      "failed_checks": [
+        "plan-fidelity",
+        "reviewable-diff"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "fail",
+          "evidence": "Diff adds `resolve_symlinks` config and rewrites `truncate()` (commits c2ee8d8, 5b77a1f), both outside the plan scope, while the description claims 'Implements the posted plan exactly\u2026 No other behavior changes.'"
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Before/after `starship module directory` at the symlink goes from empty to `~/projects/app-dir`, and physical-path rendering is stated unchanged."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "pass",
+          "evidence": "Repo facts name no required checks beyond the plan's `cargo test directory`, which was run: 'passes (34 tests)'."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "fail",
+          "evidence": "The `truncate` rewrite and the `resolve_symlinks` field are unrelated hunks obscuring the one-line fix; commits 5b77a1f and c2ee8d8 are unrelated to the bug."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "Conventional-commit title, 'Closes #7648' under Motivation and Context, and a How Has This Been Tested section are present; the repo states no AI policy."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "silent-drift",
+      "calibration": false
+    },
+    {
+      "id": "pkg-04",
+      "verdict": "reject",
+      "failed_checks": [
+        "plan-fidelity",
+        "behavioral-evidence",
+        "repository-checks"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "fail",
+          "evidence": "Description says fallback is \"the same flag set the successful probe path uses\", but diff gives only [\"--RAW-CONTROL-CHARS\"] vs. probe path's added --quit-if-one-screen/--no-init."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "fail",
+          "evidence": "Test evidence is only \"colors work now in paging mode\" with no command, before/after output, or control comparison."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "fail",
+          "evidence": "Only a bare \"`cargo test` passes\" claim; no captured output or listed checks."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Three small, on-topic hunks (pager.rs, pager_flags.rs, CHANGELOG.md) with no debug or generated debris."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "No PR template or AI policy; the contribution guide's asks (test and CHANGELOG entry) are both present in the diff."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "not-tested",
+      "calibration": false
+    },
+    {
+      "id": "pkg-05",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "pass",
+          "evidence": "Diff widens match to (name, mode, modifier, keycode) and adds warn_once on replace, exactly as planned; no out-of-scope uniqueness/renaming changes."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Issue repro shown before (only 'up' row on 0.115.0) and after (both char_r and up rows), plus unit tests for different-key and same-key cases."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "pass",
+          "evidence": "\"cargo test -p nu-protocol passes (312 tests); fmt and clippy clean\" covers the repo's cargo fmt/clippy/test requirements."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Two focused hunks (merge logic and tests) and two commits; no churn, debug code or generated debris."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "Description and 'User-facing changes' sections have substantive content; thread concerns from fdncred and kronberger-droid addressed; no AI policy stated."
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "category": "clear-accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-06",
+      "verdict": "reject",
+      "failed_checks": [
+        "plan-fidelity",
+        "repository-checks",
+        "reviewable-diff"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "fail",
+          "evidence": "Diff adds MenuFollowsWindowTheme to GlobalAppSettings.idl and a rename refactor, outside the plan's IslandWindow.cpp/.h scope, while the description claims 'No functional changes outside the system menu fix'."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Alt+space re-run on the branch: dark/dark shows a dark menu, switching to light flips it back, with before/after screenshots."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "unclear",
+          "evidence": "'Terminal.Unit.Tests pass locally (0 failures)' gives no command or output, and the plan called for the WindowsTerminal unit tests."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "fail",
+          "evidence": "Commit b3c50f8 and the Initialize() hunk rename _themeChangedRevoker/_makeFrameBrush, and commit 06f14dd adds an unrelated setting, obscuring the bounded fix."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "All template sections have content, no private API is used per the maintainer direction, and no AI-disclosure policy is stated for this repo."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "silent-drift",
+      "calibration": false
+    },
+    {
+      "id": "pkg-07",
+      "verdict": "reject",
+      "failed_checks": [
+        "behavioral-evidence",
+        "repository-checks"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "pass",
+          "evidence": "Diff groups edits by fset.File(edit.Pos), applies per file, warns/skips unresolved edits, matching the plan's single bounded change and the description."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "fail",
+          "evidence": "Test evidence covers only the one-file control (\"single-file case\"); no two-file before/after repro or go build result, and the unit test only groups two a.go edits."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "fail",
+          "evidence": "Only a bare \"go test ./pkg/goanalysis/... passes\" with no output; plan's full project test suite is not shown, and the new test calls groupEditsByFile, which the diff never defines."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Two small hunks in runner_fix.go and its test, no churn, debug leftovers or generated files; two commits map to the described change."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "Template asks for a brief description and the description gives one; no AI policy stated; not a linter-update or new-linter PR."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "not-tested",
+      "calibration": false
+    },
+    {
+      "id": "pkg-08",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "pass",
+          "evidence": "Diff touches only files_controller.go, i18n english.go and one integration test, as the plan lists; no stash-semantics change or fallback prompt; description matches the diff."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Test evidence: before 's -> Stash name prompt -> nothing', after 'toast ... no prompt; untracked.txt still listed', plus a tracked-change control that still stashes."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "pass",
+          "evidence": "Test evidence: integration test stash_untracked_only_errors passes, go test ./... passes, go generate ./... produces no cheatsheet diff; formatting only claimed in the description."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Three small hunks across two commits with an explanatory comment; no churn, debug leftovers, dead code or generated debris."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "Description has the 'PR Description' section and answers each checklist item (cheatsheets, formatting, test, i18n, no UserConfig); CONTRIBUTING.md states no AI policy; no maintainer directions in the thread."
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "category": "clear-accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-09",
+      "verdict": "reject",
+      "failed_checks": [
+        "plan-fidelity",
+        "repository-checks",
+        "reviewable-diff",
+        "repository-standards"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "fail",
+          "evidence": "Diff adds out-of-scope `--time-format` flag, help-text rewording and error.rs trim while description says 'exactly as planned'; plan excludes new flags and other messages."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Plan repro shows generic message before; branch re-run shows distinct 'input is out of range' vs 'expected formats' outputs for 2025-11-31 and yesterdayy."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "fail",
+          "evidence": "Only a bare '`cargo test` passes (612 tests)' claim with no captured output, and no tests in the diff for the planned behavior."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "fail",
+          "evidence": "Unrelated hunks (help text rewording, --time-format option, error.rs trim) and commits 7a95d33 and 3d0c6b1 obscure the bounded fix."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "fail",
+          "evidence": "Contribution guide asks for tests and a CHANGELOG entry; description claims 'CHANGELOG entry added' but the diff contains no CHANGELOG hunk or tests."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "silent-drift",
+      "calibration": false
+    },
+    {
+      "id": "pkg-10",
+      "verdict": "reject",
+      "failed_checks": [
+        "behavioral-evidence",
+        "repository-checks"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "pass",
+          "evidence": "Diff sets autoSelectFamilyAttemptTimeout: 2000 on http/https agents in shim-init-node.ts plus one unit test, matching the plan's scope and files; description accurately describes it."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "fail",
+          "evidence": "Only 'a full day of WebDAV syncs against Koofr... no further testing seemed necessary'; no delayed-connect before/after run, and the unit test only asserts the option value."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "fail",
+          "evidence": "CONTRIBUTING asks for yarn test and the plan lists it, but no command or outcome appears in the PR and its omission is not explained."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Single commit, two small hunks plus a test; the added comment explains the change and there is no churn or debug debris."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "No PR template or AI policy; description says 'Fixes #16215' and the change is minimal, as CONTRIBUTING asks."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "not-tested",
+      "calibration": false
+    },
+    {
+      "id": "pkg-11",
+      "verdict": "reject",
+      "failed_checks": [
+        "plan-fidelity"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "fail",
+          "evidence": "Description claims tests for 'the escaped, unescaped, and double-backslash cases', but the diff's test covers only the escaped (foo\\   ) and double-backslash (foo\\\\   ) cases; no unescaped-trim test exists."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Repro printf 'foo\\\\   \\n' shows the dangling '\\' error before, no error after, and rg --files omitting 'foo ' (parity with git check-ignore)."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "pass",
+          "evidence": "Test evidence: 'cargo test -p ignore passes (214 tests)', matching the plan's validation step; the repo facts list no other required checks."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Diff has one new helper trim_unescaped_trailing_spaces, one call-site change and one test; no churn, debug leftovers or generated files in the hunks shown."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "No PR template; the description is substantive, includes tests as the contribution docs ask, and discloses AI assistance with human review per the AI policy."
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "category": "clear-accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-12",
+      "verdict": "reject",
+      "failed_checks": [
+        "plan-fidelity",
+        "repository-checks",
+        "reviewable-diff",
+        "repository-standards"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "fail",
+          "evidence": "Description says 'regression test and CHANGELOG entry included' but the diff has no CHANGELOG.md hunk; it also adds unplanned dead-code and whitespace hunks."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Issue's command re-run on branch prints l1/l2 with exit 0, versus the documented before (capacity overflow, exit 101); regression test uses the huge offset."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "fail",
+          "evidence": "Only the bare claim '`cargo test` passes' with no output; no fmt/clippy outcomes shown."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "fail",
+          "evidence": "Commented-out `eprintln!(\"DBG buffer_size...\")`, dead `_unused_buffer_probe` fn, stray TODO, whitespace-only loop churn, and wip/fix commits."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "fail",
+          "evidence": "Contribution guide requires a CHANGELOG.md entry; none appears in the diff, though the description claims one."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "unreviewable",
+      "calibration": false
+    },
+    {
+      "id": "pkg-13",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "pass",
+          "evidence": "Diff gsub '[&|^<>]' -> '^%0' matches the plan's caret-escape of & ^ | < >; the % limit is stated in the plan and restated in the description."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Repro re-run shows before code=1 / truncated URL and after code=0 / ?q=hello&t=brave, matching the plan's test plan."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "pass",
+          "evidence": "TEST_FILE=test/functional/lua/ui_spec.lua make functionaltest run on Windows and passes including the new case; no other required checks listed in repo facts."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Two files, one commit, only the escape fix, its comment and a test; no churn or debug debris."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "Description has substantive Problem and Solution sections; Conventional-style commit and test included; repo states no AI policy."
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "category": "clear-accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-14",
+      "verdict": "reject",
+      "failed_checks": [
+        "plan-fidelity",
+        "behavioral-evidence",
+        "repository-checks"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "fail",
+          "evidence": "Only test added is test_header_casing_preserved, but the plan says 'Not in scope: header casing'; no test for the single-header JSON Content-Type, yet description says 'Tests added'."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "fail",
+          "evidence": "Evidence is 'http GET pie.dev/headers X-Custom-Header: value' showing casing; neither repro command was run and there is no before/after Content-Type observation."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "fail",
+          "evidence": "Only a bare 'All tests pass.' with no command or output, though CONTRIBUTING asks that the suite passes."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Small diff of client.py normalization plus one tiny test hunk; no churn, debug leftovers or generated debris obscure the fix."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "Repo facts: no PR template and no stated AI policy; thread has no maintainer directions; description has substantive content."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "not-tested",
+      "calibration": false
+    },
+    {
+      "id": "pkg-15",
+      "verdict": "reject",
+      "failed_checks": [
+        "plan-fidelity",
+        "repository-checks",
+        "reviewable-diff"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "fail",
+          "evidence": "Plan promises 'one unit test on the limit-raise helper' but the diff has none, and unplanned hunks (import reshuffle, count_open_fds, init_session reformat) have no deviation note while the description says 'per the posted plan'."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Repro re-run shows 'raised fd soft limit 64 -> unlimited' with all 6 tabs created, plus a forced-low control where the server stays up logging 'accept() failed ... retrying'."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "fail",
+          "evidence": "Only a bare claim: '`cargo test -p zellij-server` passes' with no captured output."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "fail",
+          "evidence": "Diff contains eprintln!(\"DEBUG accept err = ...\"), commented-out lsof/log::debug lines, #[allow(dead_code)] count_open_fds, import reorder and a 'misc cleanups while debugging' commit."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "No PR template or AI policy; docs ask to reference the issue and the description says 'Fixes #5474'."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "unreviewable",
+      "calibration": false
+    },
+    {
+      "id": "pkg-16",
+      "verdict": "reject",
+      "failed_checks": [
+        "plan-fidelity",
+        "repository-checks"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "unclear",
+          "evidence": "Description says start path 'keeps its tolerant behavior', but the shared DoLoadImages now returns an error when no target succeeds (single-node start = one target); the start-path caller isn't shown, so the claim can't be verified"
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Before: 'minikube image load ./notanimage.tar && echo OK' prints OK; after: error and exit 1; valid alpine.tar control exits 0 and the image is present"
+        },
+        {
+          "name": "repository-checks",
+          "grade": "fail",
+          "evidence": "Only a bare claim: '`go test ./pkg/minikube/machine/... ./cmd/...` passes' with no captured output"
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Three focused hunks (cache_images.go, image.go, a unit test) with no formatting churn, debug leftovers or unrelated edits; two scoped commits"
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "Title is release-notes style, 'fixes #23471' is present, before/after output is given, and the repo states no AI policy"
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "category": "clear-accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-17",
+      "verdict": "reject",
+      "failed_checks": [
+        "plan-fidelity"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "fail",
+          "evidence": "Description says docs 'now document the limitation' and 'implements the plan in full', but the diff has no docs-page change; the planned docs deliverable is absent and the claim contradicts the diff."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Dev repro of reactive(Object.seal({useDarkTheme:null})) shows the warning, plan repro shows the silent before, prod build verified silent, sealed/frozen tests added."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "pass",
+          "evidence": "`pnpm test reactivity` passes (511 tests); repo facts name no other required checks."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Single commit with a small warn hunk and two tests; no churn, debug leftovers or unrelated edits."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "No PR template or AI policy; conventional-commit title, problem described, tests included per contributing guide."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "silent-drift",
+      "calibration": false
+    },
+    {
+      "id": "pkg-18",
+      "verdict": "reject",
+      "failed_checks": [
+        "repository-checks",
+        "reviewable-diff"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "pass",
+          "evidence": "Only behavioral change is gating colors on stdout.is_terminal() in print_help_banner plus one test, matching the plan; description states config use-colors stays out of scope."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "`nu --help | cat -v | grep -c '\\^\\['` goes from 214 before to 0 after; tty still colored per screenshot; regression test help_piped_has_no_ansi_escapes added."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "fail",
+          "evidence": "Test evidence says only \"`cargo test` passes; fmt and clippy clean\" with no commands or outputs shown (bare claim)."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "fail",
+          "evidence": "src/command.rs keeps a commented-out debug line `// eprintln!(\"help colors: tty=...\")`, rewrites the import block, and removes and re-adds identical println! lines, none of which the plan calls for."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "Description covers problem, approach and technical detail and has a 'User-facing changes' entry; repo states no AI policy."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "unreviewable",
+      "calibration": false
+    },
+    {
+      "id": "pkg-19",
+      "verdict": "accept",
+      "failed_checks": [],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "pass",
+          "evidence": "Diff removes only the indention/whitespace reset at the break-writing site in yaml_emitter_write_single_quoted_scalar plus a round-trip test, matching the plan's one bounded change; description matches the diff."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Before (4.53.3) shows dedented closing quote; after shows input preserved with 'diff \u2026 && echo IDENTICAL' printing IDENTICAL."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "pass",
+          "evidence": "Regression test added per contribution docs and `go test ./...` reported passing (4108 tests)."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Single commit; one small emitter hunk and one test scenario, no churn, debug leftovers or unrelated edits."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "pass",
+          "evidence": "No PR template or AI policy; the only ask (tests with fixes) is met and the description is substantive."
+        }
+      ],
+      "error": null,
+      "gold": "accept",
+      "category": "clear-accept",
+      "calibration": false
+    },
+    {
+      "id": "pkg-20",
+      "verdict": "reject",
+      "failed_checks": [
+        "repository-checks",
+        "repository-standards"
+      ],
+      "checks": [
+        {
+          "name": "plan-fidelity",
+          "grade": "pass",
+          "evidence": "Diff touches only changeConditionalState and its test block in src/config/Config.zig; description says 'existing conditional-state test is updated per the issue, and a second case covers the single-theme scheme flip', matching the hunks."
+        },
+        {
+          "name": "behavioral-evidence",
+          "grade": "pass",
+          "evidence": "Test evidence shows the issue's isolated launch with printf '\\033[?996n': before ESC[?997;2n (light), after ESC[?997;1n (dark); the conditional-pair control is stated only as expected, not observed."
+        },
+        {
+          "name": "repository-checks",
+          "grade": "fail",
+          "evidence": "Only the bare claim '`zig build test` passes (config suite included)' with no captured command output or results."
+        },
+        {
+          "name": "reviewable-diff",
+          "grade": "pass",
+          "evidence": "Single commit 77d0b4c; two hunks limited to the relevance check and its tests, with no churn, debug prints or generated debris."
+        },
+        {
+          "name": "repository-standards",
+          "grade": "unclear",
+          "evidence": "AI_POLICY.md requires tool and extent disclosure for any AI usage; the description contains no disclosure or no-AI statement, and the bundle has no evidence either way about assistance."
+        }
+      ],
+      "error": null,
+      "gold": "reject",
+      "category": "standards-wall",
+      "calibration": false
+    }
+  ]
+}
